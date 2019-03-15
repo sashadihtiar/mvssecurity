@@ -37,14 +37,19 @@ public class RegController {
 
     @PostMapping("/user")
     public String singUp(@RequestParam("login") String login,
-                         @RequestParam("password") String password) {
+                         @RequestParam("password") String password,
+                         @RequestParam("name") String name,
+                         @RequestParam("surname") String surname) {
         Users users = new Users();
         Role role = new Role();
         role.setId(2L);
         users.setRole(role);
         users.setLogin(login);
         users.setPassword(password);
+        users.setName(name);
+        users.setSurname(surname);
         usersService.addUser(users);
         return "redirect:/login";
     }
+
 }

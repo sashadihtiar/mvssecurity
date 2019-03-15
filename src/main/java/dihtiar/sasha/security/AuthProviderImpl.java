@@ -1,5 +1,6 @@
 package dihtiar.sasha.security;
 
+import dihtiar.sasha.model.Role;
 import dihtiar.sasha.model.Users;
 import dihtiar.sasha.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,11 @@ public class AuthProviderImpl implements AuthenticationProvider {
             throw new BadCredentialsException("AHAHHA");
         }
         List<GrantedAuthority> list = new ArrayList<>();
+        if (user.getRole().getId() == 1L) {
+            list.add(new SimpleGrantedAuthority("ADMIN"));
+        } else {
+            list.add(new SimpleGrantedAuthority("USER"));
+        }
         return new UsernamePasswordAuthenticationToken(user, null, list);
     }
 
