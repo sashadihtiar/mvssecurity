@@ -21,12 +21,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login", "/user").anonymous()
-                .antMatchers("/yourprof").authenticated()
+                .antMatchers("/yourprof", "/films", "/yourprof/config", "/halls",
+                        "session").authenticated()
                 .antMatchers("/roles", "/users/finduserbyid", "/roles/new"
                         , "/roles/findrolebyid"
                         , "/roles/delete"
                         , "/roles/update",
-                        "/users").hasAuthority("ADMIN")
+                        "/users", "/films/delete",
+                        "/films/new", "/halls/new",
+                        "/halls/delete").hasAuthority("ADMIN")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
