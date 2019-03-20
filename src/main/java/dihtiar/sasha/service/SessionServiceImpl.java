@@ -55,31 +55,16 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public List<HPlace> freePlace(Session session) {
         List<HPlace> list = new ArrayList<>();
-        List<HPlace> result = new ArrayList<>();
+        List<HPlace> list2 = hPlaceService.findHPByHall(session.getHall());
         List<Ticket> tickets = ticketService.getTickets();
         if (tickets.size() > 0) {
             for (Ticket t : tickets) {
                 if (t.getSession().getId() == session.getId()) {
-                    HPlace hPlace = t.gethPlace();
-                    list.add(hPlace);
+                    list.add(t.gethPlace());
                 }
             }
-            List<HPlace> list2 = hPlaceService.findHPByHall(session.getHall());
-            if (list.size() > 0) {
-                for (HPlace hp : list2) {
-                    for (HPlace HP : list) {
-                        if (hp.getR() != HP.getR() || hp.getP() != HP.getP()) {
-                            result.add(hp);
-                        }
-                    }
-                }
-            } else {
-                result = list2;
-            }
-        } else {
-            result = hPlaceService.findHPByHall(session.getHall());
         }
-        return result;
-
+        list2.removeAll(list);
+        return list2;
     }
 }

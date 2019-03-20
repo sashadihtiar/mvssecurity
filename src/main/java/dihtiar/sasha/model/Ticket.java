@@ -53,5 +53,4 @@ public class Ticket {
     public void sethPlace(HPlace hPlace) {
         this.hPlace = hPlace;
     }
-
 }

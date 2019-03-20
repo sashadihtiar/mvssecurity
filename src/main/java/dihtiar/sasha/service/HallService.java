@@ -1,7 +1,6 @@
 package dihtiar.sasha.service;
 
 import dihtiar.sasha.model.Hall;
-
 import java.util.List;
 
 public interface HallService {

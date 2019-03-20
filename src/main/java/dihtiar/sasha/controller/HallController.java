@@ -1,6 +1,5 @@
 package dihtiar.sasha.controller;
 
-
 import dihtiar.sasha.model.HPlace;
 import dihtiar.sasha.model.Hall;
 import dihtiar.sasha.service.HPlaceService;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HallController {
+
     @Autowired
     HallService hallService;
 

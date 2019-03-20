@@ -1,6 +1,5 @@
 package dihtiar.sasha.security;
 
-import dihtiar.sasha.model.Role;
 import dihtiar.sasha.model.Users;
 import dihtiar.sasha.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;

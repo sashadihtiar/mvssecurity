@@ -5,5 +5,4 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 
 @Order(2)
 public class SecurityInit extends AbstractSecurityWebApplicationInitializer {
-
 }

@@ -17,7 +17,6 @@ import java.util.Properties;
 @ImportResource({"WEB-INF/persistence-config.xml"})
 public class WebConfig implements WebMvcConfigurer {
 
-
     @Bean
     public FreeMarkerViewResolver viewResolver() {
         FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
@@ -26,7 +25,6 @@ public class WebConfig implements WebMvcConfigurer {
         viewResolver.setCache(false);
         return viewResolver;
     }
-
 
     @Bean
     public FreeMarkerConfigurer configurer() {

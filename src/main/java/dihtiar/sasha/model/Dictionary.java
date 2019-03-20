@@ -2,7 +2,6 @@ package dihtiar.sasha.model;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "DICTIONARY")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

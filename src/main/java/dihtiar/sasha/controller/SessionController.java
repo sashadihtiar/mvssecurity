@@ -1,6 +1,5 @@
 package dihtiar.sasha.controller;
 
-
 import dihtiar.sasha.model.Film;
 import dihtiar.sasha.model.Hall;
 import dihtiar.sasha.model.Session;

@@ -1,6 +1,5 @@
 package dihtiar.sasha.model;
 
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import javax.persistence.*;

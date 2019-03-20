@@ -1,6 +1,5 @@
 package dihtiar.sasha.controller;
 
-
 import dihtiar.sasha.model.Role;
 import dihtiar.sasha.model.Users;
 import dihtiar.sasha.service.UsersService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class RegController {
 
-
     @Autowired
     UsersService usersService;
 
@@ -22,7 +20,6 @@ public class RegController {
     public String home() {
         return "redirect:users";
     }
-
 
     @RequestMapping("/login")
     public String login(@RequestParam(name = "error", required = false) Boolean error, Model model) {
@@ -86,5 +83,4 @@ public class RegController {
         usersService.addUser(user);
         return "redirect:/users";
     }
-
 }

@@ -1,7 +1,6 @@
 package dihtiar.sasha.service;
 
 import dihtiar.sasha.model.Film;
-
 import java.util.List;
 
 public interface FilmService {

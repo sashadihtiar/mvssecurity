@@ -2,7 +2,6 @@ package dihtiar.sasha.service;
 
 import dihtiar.sasha.model.HPlace;
 import dihtiar.sasha.model.Session;
-
 import java.sql.Time;
 import java.util.List;
 
