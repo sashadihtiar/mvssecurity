@@ -1,7 +1,9 @@
 package dihtiar.sasha.controller;
 
 
+import dihtiar.sasha.model.HPlace;
 import dihtiar.sasha.model.Hall;
+import dihtiar.sasha.service.HPlaceService;
 import dihtiar.sasha.service.HallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HallController {
     @Autowired
     HallService hallService;
+
+    @Autowired
+    HPlaceService hPlaceService;
 
     @GetMapping("/halls")
     public String getHall(Model model) {
@@ -31,10 +36,13 @@ public class HallController {
                              @RequestParam("rows") Long rows,
                              @RequestParam("places") Long places) {
         Hall hall = new Hall();
+        HPlace hPlace = new HPlace();
         hall.setName(name);
         hall.setPlaces(places);
         hall.setRows(rows);
         hallService.addnewHall(hall);
+        hPlace.setHall(hall);
+        hPlaceService.addHPlace(hPlace);
         return "redirect:/halls";
     }
 
@@ -45,6 +53,7 @@ public class HallController {
 
     @PostMapping(value = "/halls/delete")
     public String deleteHall(@RequestParam("name") String name) {
+        hPlaceService.deleteByHallID(hallService.findHallByName(name).getId());
         hallService.deleteHall(name);
         return "redirect:/halls";
     }

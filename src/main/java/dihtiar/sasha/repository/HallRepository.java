@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HallRepository extends JpaRepository<Hall, Long> {
-    void deleteHallByName(String name);
+   void  deleteHallByName(String name);
 
     Hall findHallByName(String name);
 }

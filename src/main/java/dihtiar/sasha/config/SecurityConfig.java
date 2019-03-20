@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/user").anonymous()
                 .antMatchers("/yourprof", "/films", "/yourprof/config", "/halls",
-                        "session").authenticated()
+                        "session", "/ticket/your", "/places", "/ticket/buy").authenticated()
                 .antMatchers("/roles", "/users/finduserbyid", "/roles/new"
                         , "/roles/findrolebyid"
                         , "/roles/delete"

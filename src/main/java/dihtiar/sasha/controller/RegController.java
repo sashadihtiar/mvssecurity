@@ -71,20 +71,20 @@ public class RegController {
         username = ((Users) obj).getLogin();
 
         Users user = usersService.findUserByLogin(username);
-        if (login.length()>1) {
+        if (login.length() > 1) {
             user.setLogin(login);
         }
-        if (password.length()>1) {
+        if (password.length() > 1) {
             user.setPassword(password);
         }
-        if (name.length()>1) {
+        if (name.length() > 1) {
             user.setName(name);
         }
-        if (surname.length()>1) {
+        if (surname.length() > 1) {
             user.setSurname(surname);
         }
         usersService.addUser(user);
-        return "redirect:/yourprof";
+        return "redirect:/users";
     }
 
 }

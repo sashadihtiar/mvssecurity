@@ -52,4 +52,17 @@ public class SessionController {
         return "redirect:/session";
 
     }
+
+    @GetMapping(value = "/places")
+    public String getPlaces() {
+        return "places";
+    }
+
+    @PostMapping(value = "/places")
+    public String getFreePl(Model model,@RequestParam("film_name") String film_name,
+                                  @RequestParam("film_start") Time film_start) {
+        Session session = sessionService.findSessiontByFIlmNameAdnStart(film_name,film_start);
+        model.addAttribute("qwe",sessionService.freePlace(session));
+        return "ah";
+    }
 }
