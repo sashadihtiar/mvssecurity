@@ -11,6 +11,7 @@ import dihtiar.sasha.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,14 +68,10 @@ public class TicketController {
         if (session == null) {
             throw new UsernameNotFoundException("film not found");
         }
-        List<HPlace> list = sessionService.freePlace(session);
         ticket.setSession(session);
-        for (HPlace hp : list) {
-            if (hp.getR() == rows && hp.getP() == place) {
-                ticket.sethPlace(hp);
-                ticketService.addTicket(ticket);
-            }
-        }
+        HPlace hPlace = hPlaceService.findHPlaceForTicket(session.getHall().getName(), rows, place);
+        ticket.sethPlace(hPlace);
+        ticketService.addTicket(ticket);
         return "redirect:/ticket/your";
     }
 }

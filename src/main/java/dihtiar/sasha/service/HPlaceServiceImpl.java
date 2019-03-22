@@ -48,4 +48,5 @@ public class HPlaceServiceImpl implements HPlaceService {
     public List<HPlace> findHPByHall(Hall hall) {
         return hPlaceRepository.getHPlaceByHall(hall);
     }
+
 }

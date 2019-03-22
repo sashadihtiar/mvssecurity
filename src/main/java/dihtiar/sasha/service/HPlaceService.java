@@ -2,6 +2,7 @@ package dihtiar.sasha.service;
 
 import dihtiar.sasha.model.HPlace;
 import dihtiar.sasha.model.Hall;
+
 import java.util.List;
 
 public interface HPlaceService {
@@ -12,6 +13,5 @@ public interface HPlaceService {
     void deleteByHallID(Long id);
 
     List<HPlace> findHPByHall(Hall hall);
-
 
 }
