@@ -54,5 +54,22 @@ YOUR_PLACE INT references hallplace(ID),
 SESSION_ID INT REFERENCES session(ID),
 UNIQUE (YOUR_PLACE,SESSION_ID)
 );
+delimiter ||
+create trigger up_hall after insert on hall
+     for each row
+     begin
+     declare r int default 0;
+     declare p int default 0;
+     while r < NEW.RWS DO
+     set r = r+1;
+     while p < NEW.PLACES DO
+     set p = p+1;
+     insert into hallplace values(default,r,p,NEW.ID);
+     end while;
+     set p = 0;
+     end while;
+     end;
+     ||
+delimiter ;
 
 

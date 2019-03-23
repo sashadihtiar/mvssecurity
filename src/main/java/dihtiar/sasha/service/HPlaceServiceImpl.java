@@ -19,18 +19,7 @@ public class HPlaceServiceImpl implements HPlaceService {
     @Transactional
     @Override
     public void addHPlace(HPlace hPlace) {
-        Hall hall = hPlace.getHall();
-        int i = Math.toIntExact(hall.getRows());
-        int j = Math.toIntExact(hall.getPlaces());
-        for (int r = 1; r <= i; r++) {
-            for (int p = 1; p <= j; p++) {
-                hPlace = new HPlace();
-                hPlace.setHall(hall);
-                hPlace.setR((long) r);
-                hPlace.setP((long) p);
-                hPlaceRepository.save(hPlace);
-            }
-        }
+        hPlaceRepository.save(hPlace);
     }
 
     @Override
