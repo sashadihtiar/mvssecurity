@@ -36,13 +36,10 @@ public class HallController {
                              @RequestParam("rows") Long rows,
                              @RequestParam("places") Long places) {
         Hall hall = new Hall();
-        HPlace hPlace = new HPlace();
         hall.setName(name);
         hall.setPlaces(places);
         hall.setRows(rows);
         hallService.addnewHall(hall);
-        hPlace.setHall(hall);
-        hPlaceService.addHPlace(hPlace);
         return "redirect:/halls";
     }
 
