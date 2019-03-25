@@ -50,7 +50,6 @@ public class HallController {
 
     @PostMapping(value = "/halls/delete")
     public String deleteHall(@RequestParam("name") String name) {
-        hPlaceService.deleteByHallID(hallService.findHallByName(name).getId());
         hallService.deleteHall(name);
         return "redirect:/halls";
     }

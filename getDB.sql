@@ -70,6 +70,12 @@ create trigger up_hall after insert on hall
      end while;
      end;
      ||
+create trigger del_hall before delete on hall
+    for each row
+    begin
+    delete from hallplace where ID_HALL = OLD.ID;
+    end;
+    ||
 delimiter ;
 
 
