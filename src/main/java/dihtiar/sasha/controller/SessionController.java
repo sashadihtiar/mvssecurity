@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 
 @Controller
 public class SessionController {
@@ -40,7 +40,7 @@ public class SessionController {
     @PostMapping(value = "/session/new")
     public String addnewSession(@RequestParam("film") String name_film,
                                 @RequestParam("hall") String name_hall,
-                                @RequestParam("start") Time start) {
+                                @RequestParam("start") Timestamp start) {
         Film film = filmService.findFilmByName(name_film);
         Hall hall = hallService.findHallByName(name_hall);
         Session session = new Session();
@@ -58,10 +58,25 @@ public class SessionController {
     }
 
     @PostMapping(value = "/places")
-    public String getFreePl(Model model,@RequestParam("film_name") String film_name,
-                                  @RequestParam("film_start") Time film_start) {
-        Session session = sessionService.findSessiontByFIlmNameAdnStart(film_name,film_start);
-        model.addAttribute("qwe",sessionService.freePlace(session));
+    public String getFreePl(Model model, @RequestParam("film_name") String film_name,
+                            @RequestParam("film_start") Timestamp film_start,
+                            @RequestParam("hall_name") String hall_name) {
+        Session session = sessionService.findSessiontByFIlmNameAndStartAndHall_name(film_name, film_start, hall_name);
+        model.addAttribute("qwe", sessionService.freePlace(session));
         return "ah";
+    }
+
+
+    @GetMapping("/session/delete")
+    public String delSes() {
+        return "delsess";
+    }
+
+    @PostMapping("/session/delete")
+    public String deleteSession(@RequestParam("film") String name_film,
+                                @RequestParam("hall") String name_hall,
+                                @RequestParam("start") Timestamp start) {
+        sessionService.deleteSession(name_film, start, name_hall);
+        return "redirect:/session";
     }
 }

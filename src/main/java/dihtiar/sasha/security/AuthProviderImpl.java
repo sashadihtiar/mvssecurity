@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class AuthProviderImpl implements AuthenticationProvider {
     @Autowired
     UsersService usersService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String login = authentication.getName();
@@ -30,7 +34,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
             throw new UsernameNotFoundException("User not found");
         }
         String password = authentication.getCredentials().toString();
-        if (!password.equals(user.getPassword())) {
+        if (!passwordEncoder.matches(password, (user.getPassword()))) {
             throw new BadCredentialsException("AHAHHA");
         }
         List<GrantedAuthority> list = new ArrayList<>();

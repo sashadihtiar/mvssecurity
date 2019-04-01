@@ -41,11 +41,11 @@ public class RegController {
                          @RequestParam("surname") String surname) {
         Users users = new Users();
         Role role = new Role();
-        role.setId(2L);
         users.setRole(role);
         users.setLogin(login);
         users.setPassword(password);
         users.setName(name);
+        users.setId(2L);
         users.setSurname(surname);
         usersService.addUser(users);
         return "redirect:/login";

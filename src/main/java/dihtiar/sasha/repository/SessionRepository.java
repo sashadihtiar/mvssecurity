@@ -3,14 +3,14 @@ package dihtiar.sasha.repository;
 import dihtiar.sasha.model.Session;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import java.sql.Time;
-import java.util.List;
+
+import java.sql.Timestamp;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session, Long> {
-    List<Session> findSessionByFilm_Name(String name);
 
-    void deleteSessionByFilm_NameAndStart(String name, Time start);
+    void deleteSessionByFilm_NameAndStartAndHall_Name(String name_film, Timestamp start, String hall_name);
 
-    Session findSessionByFilm_NameAndStart(String film_name, Time start);
+    Session findSessionByFilm_NameAndStartAndHall_Name(String film_name, Timestamp start, String hall_name);
+
 }

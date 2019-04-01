@@ -1,7 +1,7 @@
 package dihtiar.sasha.model;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "session")
@@ -12,7 +12,7 @@ public class Session {
     private Long id;
 
     @Column(name = "sessionstart")
-    private Time start;
+    private Timestamp start;
 
     @ManyToOne
     @JoinColumn(name = "film_id")
@@ -30,11 +30,11 @@ public class Session {
         this.id = id;
     }
 
-    public Time getStart() {
+    public Timestamp getStart() {
         return start;
     }
 
-    public void setStart(Time start) {
+    public void setStart(Timestamp start) {
         this.start = start;
     }
 

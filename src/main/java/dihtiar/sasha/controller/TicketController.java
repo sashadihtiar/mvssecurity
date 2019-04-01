@@ -11,7 +11,6 @@ import dihtiar.sasha.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Time;
-import java.util.List;
-
+import java.sql.Timestamp;
 
 @Controller
 public class TicketController {
@@ -55,16 +52,17 @@ public class TicketController {
 
     @PostMapping(value = "ticket/buy")
     public String buyTick(@RequestParam("film_name") String film_name,
-                          @RequestParam("start_film") Time start_film,
+                          @RequestParam("start_film") Timestamp start_film,
                           @RequestParam("rows") Long rows,
-                          @RequestParam("place") Long place) {
+                          @RequestParam("place") Long place,
+                          @RequestParam("name_hall") String hall_name) {
         Ticket ticket = new Ticket();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object obj = auth.getPrincipal();
         String username = ((Users) obj).getLogin();
         Users user = usersService.findUserByLogin(username);
         ticket.setUsers(user);
-        Session session = sessionService.findSessiontByFIlmNameAdnStart(film_name, start_film);
+        Session session = sessionService.findSessiontByFIlmNameAndStartAndHall_name(film_name, start_film, hall_name);
         if (session == null) {
             throw new UsernameNotFoundException("film not found");
         }
