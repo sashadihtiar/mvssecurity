@@ -26,6 +26,18 @@ public class Ticket {
     @JoinColumn(name = "your_place")
     private HPlace hPlace;
 
+    @OneToOne
+    @JoinColumn(name = "YOURE_PAYMENT")
+    private Payment payment;
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
     public Session getSession() {
         return session;
     }

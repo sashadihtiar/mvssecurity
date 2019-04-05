@@ -5,7 +5,7 @@
 <body>
 <ul>
         <#list qwe as hPlace>
-            <li>Rows:${hPlace.r} Place:${hPlace.p}</li>
+            <li>Rows:${hPlace.r} Place:${hPlace.p} Sum:${hPlace.moneyTicket.amountMoney}</li>
         </#list>
 </ul>
 </body>

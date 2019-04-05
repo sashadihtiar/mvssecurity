@@ -2,6 +2,7 @@ package dihtiar.sasha.controller;
 
 import dihtiar.sasha.model.Role;
 import dihtiar.sasha.model.Users;
+import dihtiar.sasha.service.RoleService;
 import dihtiar.sasha.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,8 @@ public class RegController {
 
     @Autowired
     UsersService usersService;
+    @Autowired
+    RoleService roleService;
 
     @GetMapping("/")
     public String home() {
@@ -40,13 +43,11 @@ public class RegController {
                          @RequestParam("name") String name,
                          @RequestParam("surname") String surname) {
         Users users = new Users();
-        Role role = new Role();
-        users.setRole(role);
         users.setLogin(login);
         users.setPassword(password);
         users.setName(name);
-        users.setId(2L);
         users.setSurname(surname);
+        users.setRole(roleService.findRoleById(2L));
         usersService.addUser(users);
         return "redirect:/login";
     }

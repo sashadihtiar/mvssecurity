@@ -19,6 +19,16 @@ public class HPlace {
     @JoinColumn(name = "id_hall")
     private Hall hall;
 
+    private Money moneyTicket;
+
+    public Money getMoneyTicket() {
+        return moneyTicket;
+    }
+
+    public void setMoneyTicket(Money moneyTicket) {
+        this.moneyTicket = moneyTicket;
+    }
+
     public Long getId() {
         return id;
     }

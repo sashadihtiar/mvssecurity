@@ -1,13 +1,7 @@
 package dihtiar.sasha.controller;
 
-import dihtiar.sasha.model.HPlace;
-import dihtiar.sasha.model.Session;
-import dihtiar.sasha.model.Ticket;
-import dihtiar.sasha.model.Users;
-import dihtiar.sasha.service.HPlaceService;
-import dihtiar.sasha.service.SessionService;
-import dihtiar.sasha.service.TicketService;
-import dihtiar.sasha.service.UsersService;
+import dihtiar.sasha.model.*;
+import dihtiar.sasha.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +28,12 @@ public class TicketController {
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    AccountService accountService;
+
+    @Autowired
+    PaymentService paymentService;
 
     @GetMapping(value = "/ticket/your")
     public String yorUser(Model model) {
@@ -68,8 +68,18 @@ public class TicketController {
         }
         ticket.setSession(session);
         HPlace hPlace = hPlaceService.findHPlaceForTicket(session.getHall().getName(), rows, place);
-        ticket.sethPlace(hPlace);
-        ticketService.addTicket(ticket);
+        Account account = accountService.showYourAccount(user, hPlace.getMoneyTicket().getMy—urrency().get—urrencyName());
+        if (account.getAmount().getAmountMoney() < hPlace.getMoneyTicket().getAmountMoney()) {
+            return "redirect:/account/repacc";
+        } else {
+            ticket.sethPlace(hPlace);
+            ticketService.addTicket(ticket);
+            accountService.minus(account, hPlace.getMoneyTicket().getAmountMoney());
+            Payment payment = new Payment();
+            payment.setAccount(account);
+            payment.setMoney(new Money(-hPlace.getMoneyTicket().getAmountMoney(), account.getAmount().getMy—urrency()));
+            paymentService.addPayment(payment);
+        }
         return "redirect:/ticket/your";
     }
 }

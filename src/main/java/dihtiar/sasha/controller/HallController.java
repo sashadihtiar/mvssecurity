@@ -1,6 +1,5 @@
 package dihtiar.sasha.controller;
 
-import dihtiar.sasha.model.HPlace;
 import dihtiar.sasha.model.Hall;
 import dihtiar.sasha.service.HPlaceService;
 import dihtiar.sasha.service.HallService;
