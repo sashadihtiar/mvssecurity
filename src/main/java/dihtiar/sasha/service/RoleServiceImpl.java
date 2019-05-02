@@ -5,6 +5,7 @@ import dihtiar.sasha.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -16,8 +17,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getAll() {
-        return roleRepository.findAll();
+        Role role = findRoleById(3l);
+        List<Role> list = roleRepository.findAll();
+        if (role != null) {
+            list.remove(role);
+        }
+        return list;
     }
+
     @Transactional
     @Override
     public void addRole(Role role) {

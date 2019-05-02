@@ -1,6 +1,7 @@
 package dihtiar.sasha.config;
 
 import org.springframework.core.annotation.Order;
+import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 @Order(1)

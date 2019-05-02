@@ -2,12 +2,15 @@ CREATE DATABASE cource;
 USE cource;
 CREATE TABLE dictionary(
 ID INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(20),
+name VARCHAR(20) default null,
+prop_key VARCHAR(30) default null,
 discriminator VARCHAR(20)
 );
-INSERT INTO dictionary VALUES(default,"ADMIN","ROLE");
-INSERT INTO dictionary VALUES(default,"USER","ROLE");
-INSERT INTO dictionary VALUES(default,"USA","CURRENCY");
+INSERT INTO dictionary VALUES(default,"ADMIN",null,"ROLE");
+INSERT INTO dictionary VALUES(default,"USER",null,"ROLE");
+INSERT INTO dictionary VALUES(default,"CORP",null,"ROLE");
+INSERT INTO dictionary VALUES(default,"USA",null,"CURRENCY");
+INSERT INTO dictionary VALUES(default,"UAH",null,"CURRENCY");
 
 CREATE TABLE users(
 ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -15,7 +18,8 @@ LOGIN VARCHAR(20),
 PASSWORD VARCHAR(200),
 NAME VARCHAR(20),
 SURNAME VARCHAR(20),
-DICTIONARY_ID INT REFERENCES dictionary(ID)
+DICTIONARY_ID INT REFERENCES dictionary(ID),
+PARENT INT default null
 );
 
 CREATE TABLE film(
@@ -42,9 +46,7 @@ CREATE TABLE hallplace (
 ID INT PRIMARY KEY AUTO_INCREMENT,
 R INT NOT NULL,
 P INT NOT NULL,
-ID_HALL INT REFERENCES hall(ID),
-AMOUNT DECIMAL NOT NULL ,
-DICTIONARY_ID int  REFERENCES dictionary(ID)
+ID_HALL INT REFERENCES hall(ID)
 );
 
 CREATE TABLE account (
@@ -79,7 +81,7 @@ create trigger up_hall after insert on hall
      set r = r+1;
      while p < NEW.PLACES DO
      set p = p+1;
-     insert into hallplace values(default,r,p,NEW.ID,100,3);
+     insert into hallplace values(default,r,p,NEW.ID);
      end while;
      set p = 0;
      end while;
@@ -94,11 +96,13 @@ create trigger del_hall before delete on hall
     create trigger account_sers after insert on users
     for each row
     begin
-    insert into account values(default,0,3,NEW.ID);
+    insert into account values(default,0,4,NEW.ID);
+    insert into account values(default,0,5,NEW.ID);
     end;
     ||
 delimiter ;
-
-INSERT INTO users VALUES(DEFAULT,"sashalog","$2a$10$koyZy8mSy9ZGAR1kH9FxwegpV6dHl3iY6zj4kXrr0OJgk1Tha4pji","SASHA","DIHTIAR",1);
+INSERT INTO users VALUES(DEFAULT,"CORP","$2a$10$Xf3aBaoXSR/w5GOE.6IHBuHQUY5FBwYvhPDrFuEQSyl6HS.yrYRSu","CORP","CORP",3,default );
+INSERT INTO users VALUES(DEFAULT,"sashalog","$2a$10$Xf3aBaoXSR/w5GOE.6IHBuHQUY5FBwYvhPDrFuEQSyl6HS.yrYRSu","Sasha","Dihtiar",1,default );
+INSERT INTO users VALUES(DEFAULT,"sasha","$2a$10$Xf3aBaoXSR/w5GOE.6IHBuHQUY5FBwYvhPDrFuEQSyl6HS.yrYRSu","Andrey","Moisov",2,1);
 
 

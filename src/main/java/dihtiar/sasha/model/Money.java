@@ -13,19 +13,19 @@ public class Money implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "DICTIONARY_ID")
-    private My—urrency my—urrency;
+    private MyCurrency myCurrency;
 
-    public Money(Double amountMoney, My—urrency my—urrency) {
+    public Money(Double amountMoney, MyCurrency myCurrency) {
         this.amountMoney = amountMoney;
-        this.my—urrency = my—urrency;
+        this.myCurrency = myCurrency;
     }
 
     public Double getAmountMoney() {
         return amountMoney;
     }
 
-    public My—urrency getMy—urrency() {
-        return my—urrency;
+    public MyCurrency getMyCurrency() {
+        return myCurrency;
     }
 
     protected Money() {

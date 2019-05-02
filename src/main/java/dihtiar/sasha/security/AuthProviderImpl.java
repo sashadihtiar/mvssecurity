@@ -35,7 +35,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
         }
         String password = authentication.getCredentials().toString();
         if (!passwordEncoder.matches(password, (user.getPassword()))) {
-            throw new BadCredentialsException("AHAHHA");
+            throw new BadCredentialsException("AHAHAC");
         }
         List<GrantedAuthority> list = new ArrayList<>();
         if (user.getRole().getId() == 1L) {

@@ -9,6 +9,7 @@
     <input name="password" type="password" placeholder="password">
     <input name="name" type="text" placeholder="name">
     <input name="surname" type="text" placeholder="surname">
+    <input name="invitation" type="text" placeholder="invitation">
     <input type="submit">
 </body>
 </html>

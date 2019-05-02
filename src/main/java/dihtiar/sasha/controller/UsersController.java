@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -14,10 +15,10 @@ public class UsersController {
     @Autowired
     UsersService usersService;
 
+
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<Users> getUsers() {
-        List<Users> users = usersService.getAll();
-        return users;
+        return usersService.getAll();
     }
 
     @RequestMapping(value = "/users/finduserbyid", method = RequestMethod.GET)
@@ -51,5 +52,16 @@ public class UsersController {
 
         Users user = usersService.findUserByLogin(username);
         return user;
+    }
+
+    @RequestMapping(value = "/testing")
+    public Double test() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object obj = auth.getPrincipal();
+        String username = "";
+        username = ((Users) obj).getLogin();
+
+        Users user = usersService.findUserByLogin(username);
+        return usersService.checkDiscount(user);
     }
 }

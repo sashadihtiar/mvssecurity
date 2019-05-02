@@ -38,4 +38,9 @@ public class HPlaceServiceImpl implements HPlaceService {
         return hPlaceRepository.getHPlaceByHall(hall);
     }
 
+    @Override
+    public List<HPlace> showall() {
+        return hPlaceRepository.findAll();
+    }
+
 }

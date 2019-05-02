@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Controller
 public class TicketController {
@@ -67,18 +68,31 @@ public class TicketController {
             throw new UsernameNotFoundException("film not found");
         }
         ticket.setSession(session);
-        HPlace hPlace = hPlaceService.findHPlaceForTicket(session.getHall().getName(), rows, place);
-        Account account = accountService.showYourAccount(user, hPlace.getMoneyTicket().getMy—urrency().get—urrencyName());
-        if (account.getAmount().getAmountMoney() < hPlace.getMoneyTicket().getAmountMoney()) {
+        List<HPlace> list = sessionService.freePlace(session);
+        HPlace hPlace = null;
+        for (HPlace hp : list) {
+            if (hp.getR() == rows && hp.getP() == place) {
+                hPlace = hp;
+            }
+        }
+        Account account = accountService.showYourAccount(user, hPlace.getCost().getMyCurrency().getCurrencyName());
+        if (account.getAmount().getAmountMoney() < hPlace.getCost().getAmountMoney()) {
             return "redirect:/account/repacc";
         } else {
             ticket.sethPlace(hPlace);
             ticketService.addTicket(ticket);
-            accountService.minus(account, hPlace.getMoneyTicket().getAmountMoney());
+            accountService.minus(account, hPlace.getCost().getAmountMoney());
             Payment payment = new Payment();
             payment.setAccount(account);
-            payment.setMoney(new Money(-hPlace.getMoneyTicket().getAmountMoney(), account.getAmount().getMy—urrency()));
+            payment.setMoney(new Money(-hPlace.getCost().getAmountMoney(), account.getAmount().getMyCurrency()));
             paymentService.addPayment(payment);
+            Users corp = usersService.findUserById(1l);
+            Account corpAcc = accountService.showYourAccount(corp, hPlace.getCost().getMyCurrency().getCurrencyName());
+            accountService.plus(corpAcc, hPlace.getCost().getAmountMoney());
+            Payment payment1 = new Payment();
+            payment1.setAccount(corpAcc);
+            payment1.setMoney(new Money(hPlace.getCost().getAmountMoney(), corpAcc.getAmount().getMyCurrency()));
+            paymentService.addPayment(payment1);
         }
         return "redirect:/ticket/your";
     }

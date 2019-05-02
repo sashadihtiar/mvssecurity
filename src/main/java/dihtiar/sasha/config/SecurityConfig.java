@@ -25,14 +25,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/user").anonymous()
                 .antMatchers("/yourprof", "/films", "/yourprof/config", "/halls",
-                        "session", "/ticket/your", "/places", "/ticket/buy").authenticated()
+                        "session", "/ticket/your", "/places", "/ticket/buy","/payments").authenticated()
                 .antMatchers("/roles", "/users/finduserbyid", "/roles/new"
                         , "/roles/findrolebyid"
                         , "/roles/delete"
                         , "/roles/update",
                         "/users", "/films/delete",
                         "/films/new", "/halls/new",
-                        "/halls/delete").hasAuthority("ADMIN")
+                        "/halls/delete","/properties","/properties/get").hasAuthority("ADMIN")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")

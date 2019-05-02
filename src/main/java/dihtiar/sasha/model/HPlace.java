@@ -19,15 +19,8 @@ public class HPlace {
     @JoinColumn(name = "id_hall")
     private Hall hall;
 
-    private Money moneyTicket;
-
-    public Money getMoneyTicket() {
-        return moneyTicket;
-    }
-
-    public void setMoneyTicket(Money moneyTicket) {
-        this.moneyTicket = moneyTicket;
-    }
+    @Transient
+    private Money cost;
 
     public Long getId() {
         return id;
@@ -59,5 +52,13 @@ public class HPlace {
 
     public void setHall(Hall hall) {
         this.hall = hall;
+    }
+
+    public Money getCost() {
+        return cost;
+    }
+
+    public void setCost(Money cost) {
+        this.cost = cost;
     }
 }

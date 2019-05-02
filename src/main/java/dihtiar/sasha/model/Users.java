@@ -2,8 +2,11 @@ package dihtiar.sasha.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -38,6 +41,20 @@ public class Users {
 
     @Column(name = "SURNAME")
     private String surname;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<Users> childes;
+
+    public List<Users> getChildes() {
+        return childes;
+    }
+
+    public void setChildes(List<Users> childes) {
+        this.childes = childes;
+    }
 
     public String getName() {
         return name;
@@ -77,17 +94,5 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", role=" + role +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                '}';
     }
 }

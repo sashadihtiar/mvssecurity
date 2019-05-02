@@ -1,6 +1,7 @@
 package dihtiar.sasha.service;
 
 
+import dihtiar.sasha.Util.Utils;
 import dihtiar.sasha.model.Users;
 import dihtiar.sasha.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UsersServiceImpl implements UsersService {
 
     @Autowired
@@ -22,7 +23,12 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public List<Users> getAll() {
-        return usersRepository.findAll();
+        Users users = findUserByLogin("CORP");
+        List<Users> list = usersRepository.findAll();
+        if (users != null) {
+            list.remove(users);
+        }
+        return list;
     }
 
     @Transactional
@@ -45,5 +51,11 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users findUserByLogin(String login) {
         return usersRepository.findUsersByLogin(login);
+    }
+
+    @Override
+    public Double checkDiscount(Users user) {
+        int deep = Utils.check(user);
+        return (deep - 1) * 0.1;
     }
 }

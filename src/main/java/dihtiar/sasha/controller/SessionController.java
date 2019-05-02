@@ -1,11 +1,7 @@
 package dihtiar.sasha.controller;
 
-import dihtiar.sasha.model.Film;
-import dihtiar.sasha.model.Hall;
-import dihtiar.sasha.model.Session;
-import dihtiar.sasha.service.FilmService;
-import dihtiar.sasha.service.HallService;
-import dihtiar.sasha.service.SessionService;
+import dihtiar.sasha.model.*;
+import dihtiar.sasha.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Controller
 public class SessionController {

@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account showYourAccount(Users user, String nameCurrency) {
-        return accountRepository.findByAmount_My—urrency_—urrencyNameAndUsers(nameCurrency, user);
+        return accountRepository.findByAmount_MyCurrency_CurrencyNameAndUsers(nameCurrency, user);
     }
 
     @Override
@@ -29,14 +29,21 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void topUpAccount(Account account, Double amount) {
-        account.setAmount(new Money(account.getAmount().getAmountMoney() + amount, account.getAmount().getMy—urrency()));
+        account.setAmount(new Money(account.getAmount().getAmountMoney() + amount, account.getAmount().getMyCurrency()));
         accountRepository.save(account);
     }
 
     @Transactional
     @Override
     public void minus(Account account, Double amount) {
-        account.setAmount(new Money(account.getAmount().getAmountMoney() - amount, account.getAmount().getMy—urrency()));
+        account.setAmount(new Money(account.getAmount().getAmountMoney() - amount, account.getAmount().getMyCurrency()));
+        accountRepository.save(account);
+    }
+
+    @Transactional
+    @Override
+    public void plus(Account account, Double amount) {
+        account.setAmount(new Money(account.getAmount().getAmountMoney() + amount, account.getAmount().getMyCurrency()));
         accountRepository.save(account);
     }
 }

@@ -59,7 +59,7 @@ public class AccountController {
         accountService.topUpAccount(account, sum);
         Payment payment = new Payment();
         payment.setAccount(account);
-        payment.setMoney(new Money(sum, account.getAmount().getMy—urrency()));
+        payment.setMoney(new Money(sum, account.getAmount().getMyCurrency()));
         paymentService.addPayment(payment);
         return "redirect:/account";
 

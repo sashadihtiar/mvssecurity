@@ -1,6 +1,5 @@
 package dihtiar.sasha.controller;
 
-import dihtiar.sasha.model.Role;
 import dihtiar.sasha.model.Users;
 import dihtiar.sasha.service.RoleService;
 import dihtiar.sasha.service.UsersService;
@@ -10,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class RegController {
@@ -41,7 +42,8 @@ public class RegController {
     public String singUp(@RequestParam("login") String login,
                          @RequestParam("password") String password,
                          @RequestParam("name") String name,
-                         @RequestParam("surname") String surname) {
+                         @RequestParam("surname") String surname,
+                         @RequestParam("invitation") Long id) {
         Users users = new Users();
         users.setLogin(login);
         users.setPassword(password);
@@ -49,6 +51,11 @@ public class RegController {
         users.setSurname(surname);
         users.setRole(roleService.findRoleById(2L));
         usersService.addUser(users);
+        Users par = usersService.findUserById(id);
+        List<Users> list = par.getChildes();
+        list.add(users);
+        par.setChildes(list);
+        usersService.addUser(par);
         return "redirect:/login";
     }
 
@@ -69,16 +76,16 @@ public class RegController {
         username = ((Users) obj).getLogin();
 
         Users user = usersService.findUserByLogin(username);
-        if (login.length() > 1) {
+        if (login.length() > 7) {
             user.setLogin(login);
         }
-        if (password.length() > 1) {
+        if (password.length() > 7) {
             user.setPassword(password);
         }
-        if (name.length() > 1) {
+        if (name.length() > 4) {
             user.setName(name);
         }
-        if (surname.length() > 1) {
+        if (surname.length() > 5) {
             user.setSurname(surname);
         }
         usersService.addUser(user);

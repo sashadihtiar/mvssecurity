@@ -1,12 +1,13 @@
 package dihtiar.sasha.model;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name = "HALL")
 public class Hall {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @Column(name = "name")

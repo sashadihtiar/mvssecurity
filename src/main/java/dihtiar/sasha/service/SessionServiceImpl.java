@@ -1,13 +1,13 @@
 package dihtiar.sasha.service;
 
-import dihtiar.sasha.model.HPlace;
+import dihtiar.sasha.model.*;
 
-import dihtiar.sasha.model.Session;
-import dihtiar.sasha.model.Ticket;
 import dihtiar.sasha.repository.SessionRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class SessionServiceImpl implements SessionService {
+    @Autowired
+    UsersService usersService;
+
+    @Autowired
+    MyCurrencyService myCurrencyService;
+
+    @Autowired
+    MyPropertiesService myPropertiesService;
 
     @Autowired
     SessionFactory sessionFactory;
@@ -83,12 +91,13 @@ public class SessionServiceImpl implements SessionService {
         return sessionRepository.findSessionByFilm_NameAndStartAndHall_Name(film_name, start, hall_name);
     }
 
+    @Transactional
     @Override
     public List<HPlace> freePlace(Session session) {
         List<HPlace> list = new ArrayList<>();
         List<HPlace> list2 = hPlaceService.findHPByHall(session.getHall());
         List<Ticket> tickets = ticketService.getTickets();
-        if (tickets.size() > 0) {
+        if (!tickets.isEmpty()) {
             for (Ticket t : tickets) {
                 if (t.getSession().getId() == session.getId()) {
                     list.add(t.gethPlace());
@@ -96,6 +105,38 @@ public class SessionServiceImpl implements SessionService {
             }
         }
         list2.removeAll(list);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object obj = auth.getPrincipal();
+        String username = "";
+        username = ((Users) obj).getLogin();
+
+        Users user = usersService.findUserByLogin(username);
+        Double costd = Double.valueOf(myPropertiesService.findProps("default.cost").getValue());
+        if (session.getStart().toLocalDateTime().getHour() < 10) {
+            costd *= Double.valueOf(myPropertiesService.findProps("default.coffortime").getValue());
+        } else if (session.getStart().toLocalDateTime().getHour() > 17) {
+            costd *= 1 + Double.valueOf(myPropertiesService.findProps("default.coffortime").getValue());
+        }
+        for (HPlace hp : list2) {
+            if (hp.getR() == 1) {
+                hp.setCost(new Money(costd * Double.valueOf(myPropertiesService.
+                        findProps("default.cofforplace").getValue()),
+                        myCurrencyService.
+                                findByID(Long.valueOf(myPropertiesService.findProps("default.currency").getValue()))));
+            } else if (list2.size() > 0 && hp.getR() == list2.get(list2.size() - 1).getR()) {
+                hp.setCost(new Money(costd * (1 + Double.valueOf(myPropertiesService.
+                        findProps("default.cofforplace").getValue())),
+                        myCurrencyService.
+                                findByID(Long.valueOf(myPropertiesService.findProps("default.currency").getValue()))));
+            } else {
+                hp.setCost(new Money(costd, myCurrencyService.
+                        findByID(Long.valueOf(myPropertiesService.findProps("default.currency").getValue()))));
+            }
+            if (usersService.checkDiscount(user) != 0) {
+                hp.setCost(new Money(hp.getCost().getAmountMoney() - hp.getCost().getAmountMoney() * usersService.checkDiscount(user),
+                        hp.getCost().getMyCurrency()));
+            }
+        }
         return list2;
     }
 

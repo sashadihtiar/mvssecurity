@@ -14,4 +14,6 @@ public interface AccountService {
     void topUpAccount(Account account, Double amount);
 
     void minus(Account account, Double amount);
+
+    void plus(Account account, Double amount);
 }

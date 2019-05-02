@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 public class PaymentServiceImpl implements PaymentService {
@@ -22,7 +24,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment showYourPayment(Users user) {
+    public List<Payment> showYourPayment(Users user) {
         return paymentsRepository.findByAccount_Users(user);
     }
 }

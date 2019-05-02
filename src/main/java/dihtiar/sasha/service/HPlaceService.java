@@ -14,4 +14,6 @@ public interface HPlaceService {
 
     List<HPlace> findHPByHall(Hall hall);
 
+    List<HPlace> showall();
+
 }
