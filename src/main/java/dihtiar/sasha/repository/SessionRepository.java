@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session, Long> {
@@ -13,4 +14,5 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     Session findSessionByFilm_NameAndStartAndHall_Name(String film_name, Timestamp start, String hall_name);
 
+    List<Session> findSessionsByFilm_Name(String filmName);
 }

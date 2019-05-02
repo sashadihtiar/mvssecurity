@@ -103,6 +103,5 @@ create trigger del_hall before delete on hall
 delimiter ;
 INSERT INTO users VALUES(DEFAULT,"CORP","$2a$10$Xf3aBaoXSR/w5GOE.6IHBuHQUY5FBwYvhPDrFuEQSyl6HS.yrYRSu","CORP","CORP",3,default );
 INSERT INTO users VALUES(DEFAULT,"sashalog","$2a$10$Xf3aBaoXSR/w5GOE.6IHBuHQUY5FBwYvhPDrFuEQSyl6HS.yrYRSu","Sasha","Dihtiar",1,default );
-INSERT INTO users VALUES(DEFAULT,"sasha","$2a$10$Xf3aBaoXSR/w5GOE.6IHBuHQUY5FBwYvhPDrFuEQSyl6HS.yrYRSu","Andrey","Moisov",2,1);
 
 

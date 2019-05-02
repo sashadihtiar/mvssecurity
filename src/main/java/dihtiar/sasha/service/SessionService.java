@@ -16,4 +16,6 @@ public interface SessionService {
     Session findSessiontByFIlmNameAndStartAndHall_name(String film_name, Timestamp start, String hall_name);
 
     List<HPlace> freePlace(Session session);
+
+    List<Session> findSessionByFilmName(String filmName);
 }

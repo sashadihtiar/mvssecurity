@@ -140,4 +140,9 @@ public class SessionServiceImpl implements SessionService {
         return list2;
     }
 
+    @Override
+    public List<Session> findSessionByFilmName(String filmName) {
+        return sessionRepository.findSessionsByFilm_Name(filmName);
+    }
+
 }
